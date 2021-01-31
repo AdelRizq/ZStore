@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import './screens/product_details_screen.dart';
 import './screens/prodcuts_overview_screen.dart';
+
+import './providers/products.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,30 +22,35 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: currentTheme['primary'],
-        accentColor: currentTheme['accent'],
-        canvasColor: currentTheme['canvas'],
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        textTheme: ThemeData.light().textTheme.copyWith(
-              bodyText1: TextStyle(
-                color: currentTheme['bodyText1'],
+    return ChangeNotifierProvider(
+      create: (ctx) => Products(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: 'Lato',
+          primarySwatch: currentTheme['primary'],
+          accentColor: currentTheme['accent'],
+          canvasColor: currentTheme['canvas'],
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          textTheme: ThemeData.light().textTheme.copyWith(
+                bodyText1: TextStyle(
+                  color: currentTheme['bodyText1'],
+                ),
+                headline6: TextStyle(
+                  color: currentTheme['headline6'],
+                ),
+                headline4: TextStyle(
+                  color: currentTheme['headline4'],
+                ),
               ),
-              headline6: TextStyle(
-                color: currentTheme['headline6'],
-              ),
-              headline4: TextStyle(
-                color: currentTheme['headline4'],
-              ),
-            ),
+        ),
+        routes: {
+          '/': (ctx) => ProductsOverviewScreen(),
+          ProductsOverviewScreen.routeName: (ctx) => ProductsOverviewScreen(),
+          ProductDetailsScreen.routeName: (ctx) => ProductDetailsScreen(),
+        },
       ),
-      routes: {
-        '/': (ctx) => ProductsOverviewScreen(),
-        ProductsOverviewScreen.routeName: (ctx) => ProductsOverviewScreen(),
-      },
     );
   }
 }

@@ -1,32 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../models/product.dart';
+import '../screens/product_details_screen.dart';
+
+import '../providers/product.dart';
 
 class ProductItem extends StatelessWidget {
-  final Product product;
-
-  ProductItem(this.product);
+  ProductItem();
 
   @override
   Widget build(BuildContext context) {
-    return GridTile(
-      child: Image.network(
-        product.imageUrl,
-        fit: BoxFit.cover,
-      ),
-      footer: GridTileBar(
-        backgroundColor: Colors.black54,
-        title: Text(
-          product.title,
-          textAlign: TextAlign.center,
+    Product product = Provider.of<Product>(context, listen: false);
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pushNamed(
+          ProductDetailsScreen.routeName,
+          arguments: product.id,
+        );
+      },
+      child: GridTile(
+        child: Image.network(
+          product.imageUrl,
+          fit: BoxFit.cover,
         ),
-        leading: IconButton(
-          icon: Icon(Icons.favorite_border),
-          onPressed: () {},
-        ),
-        trailing: IconButton(
-          icon: Icon(Icons.shopping_cart_outlined),
-          onPressed: () {},
+        footer: GridTileBar(
+          backgroundColor: Colors.black87,
+          title: Text(
+            product.title,
+            textAlign: TextAlign.center,
+          ),
+          leading: Consumer<Product>(
+            builder: (context, product, _) => IconButton(
+              icon: Icon(
+                product.isFavorite ? Icons.favorite : Icons.favorite_border,
+              ),
+              color: Theme.of(context).accentColor,
+              onPressed: () {
+                product.toggleFavorite();
+              },
+            ),
+          ),
+          trailing: IconButton(
+            icon: Icon(Icons.shopping_cart_outlined),
+            color: Theme.of(context).accentColor,
+            onPressed: () {},
+          ),
         ),
       ),
     );
