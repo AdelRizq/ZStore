@@ -58,13 +58,18 @@ class Cart with ChangeNotifier {
       _items.putIfAbsent(
         id,
         () => CartItem(
-          id: id,
+          id: DateTime.now().toString(),
           title: title,
           price: price,
           quantity: 1,
         ),
       );
     }
+    notifyListeners();
+  }
+
+  void clear() {
+    _items = {};
     notifyListeners();
   }
 }

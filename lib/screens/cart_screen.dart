@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/orders.dart';
 import '../providers/cart.dart' show Cart;
+
 import '../widgets/cart_item.dart';
 
 class CartScreen extends StatelessWidget {
@@ -40,7 +42,11 @@ class CartScreen extends StatelessWidget {
                       'ORDER',
                       style: Theme.of(context).textTheme.headline4,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Provider.of<Orders>(context, listen: false)
+                          .addOrder(cart.total, cart.items.values.toList());
+                      cart.clear();
+                    },
                   ),
                 ],
               ),
