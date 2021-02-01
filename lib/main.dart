@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import './screens/cart_screen.dart';
 import './screens/product_details_screen.dart';
 import './screens/prodcuts_overview_screen.dart';
 
+import './providers/cart.dart';
 import './providers/products.dart';
 
 void main() {
@@ -11,7 +13,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  Map<String, Object> currentTheme = {
+  final Map<String, Object> currentTheme = {
+    'primartSwatch': Colors.red,
     'primary': Colors.red,
     'accent': Colors.redAccent,
     'canvas': Color.fromRGBO(253, 231, 181, 1),
@@ -22,14 +25,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (ctx) => Products(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (ctx) => Products(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => Cart(),
+        ),
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: 'Lato',
-          primarySwatch: currentTheme['primary'],
+          primarySwatch: currentTheme['primartSwatch'],
+          primaryColor: currentTheme['primary'],
           accentColor: currentTheme['accent'],
           canvasColor: currentTheme['canvas'],
           visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -39,9 +50,11 @@ class MyApp extends StatelessWidget {
                 ),
                 headline6: TextStyle(
                   color: currentTheme['headline6'],
+                  fontSize: 20,
                 ),
                 headline4: TextStyle(
                   color: currentTheme['headline4'],
+                  fontSize: 16,
                 ),
               ),
         ),
@@ -49,6 +62,7 @@ class MyApp extends StatelessWidget {
           '/': (ctx) => ProductsOverviewScreen(),
           ProductsOverviewScreen.routeName: (ctx) => ProductsOverviewScreen(),
           ProductDetailsScreen.routeName: (ctx) => ProductDetailsScreen(),
+          CartScreen.routeName: (ctx) => CartScreen(),
         },
       ),
     );
