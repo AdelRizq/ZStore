@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shopify/screens/orders_screen.dart';
 
 import './screens/cart_screen.dart';
+import 'screens/edit_product_screen.dart';
+import './screens/orders_screen.dart';
+import './screens/user_products_screen.dart';
 import './screens/product_details_screen.dart';
 import './screens/prodcuts_overview_screen.dart';
 
@@ -65,10 +67,12 @@ class MyApp extends StatelessWidget {
         ),
         routes: {
           '/': (ctx) => ProductsOverviewScreen(),
-          ProductsOverviewScreen.routeName: (ctx) => ProductsOverviewScreen(),
-          ProductDetailsScreen.routeName: (ctx) => ProductDetailsScreen(),
           CartScreen.routeName: (ctx) => CartScreen(),
           OrdersScreen.routeName: (ctx) => OrdersScreen(),
+          EditProductScreen.routeName: (ctx) => EditProductScreen(),
+          UserProductsScreen.routeName: (ctx) => UserProductsScreen(),
+          ProductDetailsScreen.routeName: (ctx) => ProductDetailsScreen(),
+          ProductsOverviewScreen.routeName: (ctx) => ProductsOverviewScreen(),
         },
       ),
     );

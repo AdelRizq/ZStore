@@ -31,7 +31,7 @@ class ProductDetailsScreen extends StatelessWidget {
               ),
             ),
             Text(
-              '\$${product.price}',
+              '\$${product.price.toStringAsFixed(2)}',
               style: Theme.of(context).textTheme.headline6,
             ),
             SizedBox(height: 10),
