@@ -23,8 +23,8 @@ class MyApp extends StatelessWidget {
     'accent': Colors.redAccent,
     'canvas': Color.fromRGBO(253, 231, 181, 1),
     'bodyText1': Color.fromRGBO(26, 192, 198, 1),
-    'headline6': Color.fromRGBO(26, 192, 198, 1),
-    'headline4': Color.fromRGBO(26, 192, 198, 1),
+    'headline6': Color.fromRGBO(26, 192, 20, 1),
+    'headline4': Color.fromRGBO(26, 192, 20, 1),
   };
 
   @override
