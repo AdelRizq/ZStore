@@ -12,7 +12,6 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Cart cart = Provider.of<Cart>(context);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cart'),
@@ -21,36 +20,28 @@ class CartScreen extends StatelessWidget {
         children: [
           Card(
             margin: EdgeInsets.all(15),
-            child: Padding(
-              padding: EdgeInsets.all(12.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Total',
-                      style: Theme.of(context).textTheme.headline6,
+            child: Builder(builder: (context) {
+              return Padding(
+                padding: EdgeInsets.all(12.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Total',
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
                     ),
-                  ),
-                  Spacer(),
-                  Chip(
-                    label: Text('\$${cart.total}'),
-                  ),
-                  FlatButton(
-                    child: Text(
-                      'ORDER',
-                      style: Theme.of(context).textTheme.headline4,
+                    Spacer(),
+                    Chip(
+                      label: Text('\$${cart.total}'),
                     ),
-                    onPressed: () {
-                      Provider.of<Orders>(context, listen: false)
-                          .addOrder(cart.total, cart.items.values.toList());
-                      cart.clear();
-                    },
-                  ),
-                ],
-              ),
-            ),
+                    OrderFlatButton(cart),
+                  ],
+                ),
+              );
+            }),
           ),
           Expanded(
             child: ListView.builder(
@@ -67,5 +58,49 @@ class CartScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class OrderFlatButton extends StatefulWidget {
+  final cart;
+
+  OrderFlatButton(this.cart);
+  @override
+  _OrderFlatButtonState createState() => _OrderFlatButtonState();
+}
+
+class _OrderFlatButtonState extends State<OrderFlatButton> {
+  bool _isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return _isLoading
+        ? CircularProgressIndicator()
+        : FlatButton(
+            child: Text(
+              'ORDER',
+              // style: Theme.of(context).textTheme.headline4,
+            ),
+            onPressed: (widget.cart.total == 0 || _isLoading)
+                ? null
+                : () async {
+                    try {
+                      setState(() => _isLoading = true);
+                      await Provider.of<Orders>(context, listen: false)
+                          .addOrder(
+                        widget.cart.total,
+                        widget.cart.items.values.toList(),
+                      );
+                      setState(() => _isLoading = false);
+                      widget.cart.clear();
+                    } catch (error) {
+                      Scaffold.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Oops, please try again'),
+                        ),
+                      );
+                    }
+                  },
+          );
   }
 }

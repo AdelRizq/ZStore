@@ -1,5 +1,7 @@
-import 'package:flutter/foundation.dart';
+import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 import './cart.dart';
 
 class OrderItem {
@@ -23,16 +25,74 @@ class Orders with ChangeNotifier {
     return [..._orders];
   }
 
-  void addOrder(double total, List<CartItem> products) {
-    _orders.insert(
-      0,
-      OrderItem(
-        id: DateTime.now().toString(),
-        total: total,
-        products: products,
-        date: DateTime.now(),
-      ),
-    );
+  Future<void> getAndSetProducts() async {
+    const url = 'https://shopify-1b172-default-rtdb.firebaseio.com/orders.json';
+
+    final List<OrderItem> _loadedOrders = [];
+
+    final response = await http.get(url);
+    final data = json.decode(response.body) as Map<String, dynamic>;
+
+    if (data == null) return;
+
+    data.forEach((orderId, order) {
+      _loadedOrders.add(
+        OrderItem(
+          id: orderId,
+          date: DateTime.parse(order['date']),
+          total: order['total'],
+          products: (order['products'] as List<dynamic>)
+              .map(
+                (item) => CartItem(
+                  id: item['id'],
+                  price: item['price'],
+                  quantity: item['quantity'],
+                  title: item['title'],
+                ),
+              )
+              .toList(),
+        ),
+      );
+    });
+
+    _orders = _loadedOrders;
     notifyListeners();
+  }
+
+  Future<void> addOrder(double total, List<CartItem> products) async {
+    const url = 'https://shopify-1b172-default-rtdb.firebaseio.com/orders.json';
+    try {
+      final response = await http.post(
+        url,
+        body: json.encode({
+          'total': total,
+          'products': products,
+          'date': DateTime.now(),
+        }, toEncodable: datetimeSerializer),
+      );
+
+      _orders.insert(
+        0,
+        OrderItem(
+          id: json.decode(response.body)['name'],
+          total: total,
+          products: products,
+          date: DateTime.now(),
+        ),
+      );
+      notifyListeners();
+    } catch (error) {
+      print(error);
+      throw (error);
+    }
+  }
+
+  dynamic datetimeSerializer(dynamic object) {
+    if (object is DateTime) {
+      return object.toIso8601String();
+    } else if (object is CartItem) {
+      return object.toJson();
+    }
+    return object;
   }
 }

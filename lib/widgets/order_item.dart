@@ -39,7 +39,7 @@ class _OrderItemState extends State<OrderItem> {
           if (_isExpanded)
             SingleChildScrollView(
               child: Container(
-                height: min(widget.order.products.length * 30.0 + 10, 100),
+                height: min(widget.order.products.length * 35.0 + 20, 100),
                 padding: EdgeInsets.all(15),
                 child: ListView.builder(
                   itemCount: widget.order.products.length,

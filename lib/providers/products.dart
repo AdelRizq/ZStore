@@ -61,6 +61,9 @@ class Products with ChangeNotifier {
       final response = await http.get(url);
       final products = json.decode(response.body) as Map<String, dynamic>;
       List<Product> fetchedProducts = [];
+
+      if (products == null) return;
+
       products.forEach((productId, product) {
         fetchedProducts.add(
           Product(
@@ -75,7 +78,6 @@ class Products with ChangeNotifier {
       _items = fetchedProducts;
       notifyListeners();
     } catch (error) {
-      print(error);
       throw (error);
     }
   }
@@ -136,7 +138,7 @@ class Products with ChangeNotifier {
     final productIndex = _items.indexWhere((product) => product.id == id);
     var tempProduct = _items[productIndex];
     final url =
-        'https://shopify-1b172-default-rtdb.firebaseio.com/products/$id';
+        'https://shopify-1b172-default-rtdb.firebaseio.com/products/$id.json';
 
     // optimistic updating (remove then check if it's removed or not)
     _items.removeWhere((item) => item.id == id);

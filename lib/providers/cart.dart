@@ -19,6 +19,19 @@ class CartItem {
   void increaseQuantity() {
     this.quantity++;
   }
+
+  CartItem.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        title = json['title'],
+        price = json['price'],
+        quantity = json['quantity'];
+
+  Map<String, dynamic> toJson() => {
+        'id': this.id,
+        'title': this.title,
+        'price': this.price,
+        'quantity': this.quantity,
+      };
 }
 
 class Cart with ChangeNotifier {
