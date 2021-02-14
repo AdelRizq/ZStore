@@ -19,28 +19,35 @@ class _OrderItemState extends State<OrderItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(10),
-      child: Column(
-        children: [
-          ListTile(
-            title: Text('\$${widget.order.total}'),
-            subtitle:
-                Text(DateFormat('dd MM yyyy hh:mm').format(widget.order.date)),
-            trailing: IconButton(
-              icon: Icon(_isExpanded ? Icons.expand_less : Icons.expand_more),
-              onPressed: () {
-                setState(() {
-                  _isExpanded = !_isExpanded;
-                });
-              },
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 300),
+      height: _isExpanded
+          ? min(widget.order.products.length * 20.0 + 150, 200)
+          : 95,
+      child: Card(
+        margin: EdgeInsets.all(10),
+        child: Column(
+          children: [
+            ListTile(
+              title: Text('\$${widget.order.total}'),
+              subtitle: Text(
+                  DateFormat('dd MM yyyy hh:mm').format(widget.order.date)),
+              trailing: IconButton(
+                icon: Icon(_isExpanded ? Icons.expand_less : Icons.expand_more),
+                onPressed: () {
+                  setState(() {
+                    _isExpanded = !_isExpanded;
+                  });
+                },
+              ),
             ),
-          ),
-          if (_isExpanded)
             SingleChildScrollView(
-              child: Container(
-                height: min(widget.order.products.length * 35.0 + 20, 100),
-                padding: EdgeInsets.all(15),
+              child: AnimatedContainer(
+                duration: Duration(milliseconds: 450),
+                height: _isExpanded
+                    ? min(widget.order.products.length * 20.0 + 10, 200)
+                    : 0,
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
                 child: ListView.builder(
                   itemCount: widget.order.products.length,
                   itemBuilder: (ctx, i) => Row(
@@ -48,7 +55,7 @@ class _OrderItemState extends State<OrderItem> {
                     children: [
                       Text(
                         widget.order.products[i].title,
-                        style: Theme.of(context).textTheme.headline4,
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                       Text(
                         '${widget.order.products[i].quantity} x \$${widget.order.products[i].price}',
@@ -59,7 +66,8 @@ class _OrderItemState extends State<OrderItem> {
                 ),
               ),
             ),
-        ],
+          ],
+        ),
       ),
     );
   }
