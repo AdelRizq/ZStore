@@ -20,13 +20,18 @@ class OrderItem {
 
 class Orders with ChangeNotifier {
   List<OrderItem> _orders = [];
+  final String authToken;
+  final String userId;
+
+  Orders(this.authToken, this.userId, this._orders);
 
   List<OrderItem> get orders {
-    return [..._orders];
+    return [..._orders].reversed.toList();
   }
 
-  Future<void> getAndSetProducts() async {
-    const url = 'https://shopify-1b172-default-rtdb.firebaseio.com/orders.json';
+  Future<void> getAndSetOrders() async {
+    final url =
+        'https://shopify-1b172-default-rtdb.firebaseio.com/orders/$userId.json?auth=$authToken';
 
     final List<OrderItem> _loadedOrders = [];
 
@@ -60,7 +65,8 @@ class Orders with ChangeNotifier {
   }
 
   Future<void> addOrder(double total, List<CartItem> products) async {
-    const url = 'https://shopify-1b172-default-rtdb.firebaseio.com/orders.json';
+    final url =
+        'https://shopify-1b172-default-rtdb.firebaseio.com/orders/$userId.json?auth=$authToken';
     try {
       final response = await http.post(
         url,
@@ -71,8 +77,7 @@ class Orders with ChangeNotifier {
         }, toEncodable: datetimeSerializer),
       );
 
-      _orders.insert(
-        0,
+      _orders.add(
         OrderItem(
           id: json.decode(response.body)['name'],
           total: total,

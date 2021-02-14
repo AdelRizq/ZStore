@@ -8,6 +8,7 @@ class Product with ChangeNotifier {
   final String id;
   final String title;
   final String imageUrl;
+  final String creatorId;
   final String description;
 
   final double price;
@@ -18,23 +19,22 @@ class Product with ChangeNotifier {
     @required this.id,
     @required this.title,
     @required this.imageUrl,
+    @required this.creatorId,
     @required this.description,
     @required this.price,
     this.isFavorite = false,
   });
 
-  Future<void> toggleFavorite() async {
-    final url =
-        'https://shopify-1b172-default-rtdb.firebaseio.com/products/$id.json';
+  Future<void> toggleFavorite(String authToken, String userId) async {
+    var url =
+        'https://shopify-1b172-default-rtdb.firebaseio.com/userFavorites/$userId/$id.json?auth=$authToken';
 
     isFavorite = !isFavorite;
     notifyListeners();
 
-    final response = await http.patch(
+    final response = await http.put(
       url,
-      body: json.encode({
-        'isFavorite': isFavorite,
-      }),
+      body: json.encode(isFavorite),
     );
 
     if (response.statusCode >= 400) {

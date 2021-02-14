@@ -24,6 +24,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     title: '',
     imageUrl: '',
     description: '',
+    creatorId: '',
   );
 
   var _initValues = {
@@ -63,6 +64,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
           imageUrl: oldProduct.imageUrl,
           description: oldProduct.description,
           isFavorite: oldProduct.isFavorite,
+          creatorId: oldProduct.creatorId,
         );
 
         _imageUrlController.text = _initValues['imageUrl'];
@@ -164,6 +166,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           description: _product.description,
                           imageUrl: _product.imageUrl,
                           isFavorite: _product.isFavorite,
+                          creatorId: _product.creatorId,
                         );
                       },
                     ),
@@ -193,6 +196,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           description: _product.description,
                           imageUrl: _product.imageUrl,
                           isFavorite: _product.isFavorite,
+                          creatorId: _product.creatorId,
                         );
                       },
                     ),
@@ -217,6 +221,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           price: _product.price,
                           description: description,
                           imageUrl: _product.imageUrl,
+                          creatorId: _product.creatorId,
                           isFavorite: _product.isFavorite,
                         );
                       },
@@ -258,7 +263,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                               if (imageUrl.isEmpty) {
                                 return 'Please enter an image url!';
                               } else if (!imageUrl.startsWith('http') &&
-                                  !imageUrl.startsWith('https')) {
+                                  !imageUrl.startsWith('https') &&
+                                  !imageUrl.startsWith('data:')) {
                                 return 'Please enter a valid URL';
                               }
 
@@ -272,6 +278,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                 description: _product.description,
                                 imageUrl: imageUrl,
                                 isFavorite: _product.isFavorite,
+                                creatorId: _product.creatorId,
                               );
                             },
                           ),
