@@ -18,6 +18,23 @@ class CartItem extends StatelessWidget {
     this.productId,
   });
 
+  Widget _alertDialog(BuildContext ctx) {
+    return AlertDialog(
+      title: Text('Are You Sure?'),
+      content: Text('Sure to remove this item ?'),
+      actions: [
+        FlatButton(
+          onPressed: () => Navigator.of(ctx).pop(true),
+          child: Text('Yes'),
+        ),
+        FlatButton(
+          onPressed: () => Navigator.of(ctx).pop(false),
+          child: Text('No'),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dismissible(
@@ -43,20 +60,7 @@ class CartItem extends StatelessWidget {
       confirmDismiss: (direction) {
         return showDialog(
           context: context,
-          builder: (ctx) => AlertDialog(
-            title: Text('Are You Sure?'),
-            content: Text('Sure to remove this item ?'),
-            actions: [
-              FlatButton(
-                onPressed: () => Navigator.of(ctx).pop(true),
-                child: Text('Yes'),
-              ),
-              FlatButton(
-                onPressed: () => Navigator.of(ctx).pop(false),
-                child: Text('No'),
-              ),
-            ],
-          ),
+          builder: (ctx) => _alertDialog(ctx),
         );
       },
       onDismissed: (direction) {
@@ -75,15 +79,43 @@ class CartItem extends StatelessWidget {
               padding: EdgeInsets.all(5),
               child: FittedBox(
                 child: Text(
-                  '\$$price',
+                  '\$${price.toStringAsFixed(2)}',
                   style: TextStyle(color: Theme.of(context).canvasColor),
                 ),
               ),
             ),
           ),
           title: Text('$title'),
-          subtitle: Text('Total: ${price * quantity}'),
-          trailing: Text('$quantity x'),
+          subtitle: Text('Total: ${(price * quantity).toStringAsFixed(2)}'),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ButtonTheme(
+                minWidth: 20.0,
+                child: FlatButton(
+                  child: Icon(Icons.add),
+                  onPressed: () {
+                    Provider.of<Cart>(context, listen: false)
+                        .addItem(productId, title, price);
+                  },
+                ),
+              ),
+              ButtonTheme(
+                minWidth: 20,
+                child: FlatButton(
+                  child: Icon(Icons.remove),
+                  onPressed: () {
+                    Provider.of<Cart>(context, listen: false)
+                        .removeSingleItem(productId);
+                  },
+                ),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * .05,
+              ),
+              Text('$quantity x'),
+            ],
+          ),
         ),
       ),
     );
