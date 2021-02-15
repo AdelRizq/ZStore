@@ -10,11 +10,12 @@ import './screens/orders_screen.dart';
 import './screens/edit_product_screen.dart';
 import './screens/user_products_screen.dart';
 import './screens/product_details_screen.dart';
-import './screens/prodcuts_overview_screen.dart';
+import './screens/products_overview_screen.dart';
 
 import './providers/auth.dart';
 import './providers/cart.dart';
 import './providers/orders.dart';
+import './providers/product.dart';
 import './providers/products.dart';
 
 void main() {
@@ -48,6 +49,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (ctx) => Cart(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => Product(),
         ),
         ChangeNotifierProxyProvider<Auth, Orders>(
           update: (ctx, auth, oldOrders) => Orders(

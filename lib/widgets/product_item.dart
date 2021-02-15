@@ -8,8 +8,6 @@ import '../providers/cart.dart';
 import '../providers/auth.dart';
 
 class ProductItem extends StatelessWidget {
-  ProductItem();
-
   @override
   Widget build(BuildContext context) {
     Product product = Provider.of<Product>(context, listen: false);
