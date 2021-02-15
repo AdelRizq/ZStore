@@ -70,10 +70,14 @@ class CartItem extends StatelessWidget {
         child: ListTile(
           leading: CircleAvatar(
             radius: 25,
+            backgroundColor: Theme.of(context).accentColor,
             child: Padding(
               padding: EdgeInsets.all(5),
               child: FittedBox(
-                child: Text('\$$price'),
+                child: Text(
+                  '\$$price',
+                  style: TextStyle(color: Theme.of(context).canvasColor),
+                ),
               ),
             ),
           ),

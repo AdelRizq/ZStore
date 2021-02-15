@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopify/helpers/custom_route.dart';
+import 'package:shopify/screens/product_image_screen.dart';
 
 import './screens/auth_screen.dart';
 import './screens/cart_screen.dart';
@@ -22,13 +23,12 @@ void main() {
 
 class MyApp extends StatelessWidget {
   final Map<String, Object> currentTheme = {
-    'primartSwatch': Colors.red,
-    'primary': Colors.red,
-    'accent': Colors.redAccent,
-    'canvas': Color.fromRGBO(253, 231, 181, 1),
-    'bodyText1': Color.fromRGBO(26, 192, 198, 1),
-    'headline6': Color.fromRGBO(26, 192, 20, 1),
-    'headline4': Color.fromRGBO(26, 192, 20, 1),
+    'primary': Color(0xff0b1423),
+    'accent': Color(0xffec981a),
+    'canvas': Color(0xFFdedee1),
+    'bodyText1': Color(0xFF332E38),
+    'headline6': Color(0xFF332E38),
+    'headline4': Color(0xFF332E38),
   };
 
   @override
@@ -82,6 +82,7 @@ class MyApp extends StatelessWidget {
                   headline6: TextStyle(
                     color: currentTheme['headline6'],
                     fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
                   headline4: TextStyle(
                     color: currentTheme['headline4'],
@@ -103,6 +104,7 @@ class MyApp extends StatelessWidget {
             ProductsOverviewScreen.routeName: (ctx) => ProductsOverviewScreen(),
             CartScreen.routeName: (ctx) => CartScreen(),
             OrdersScreen.routeName: (ctx) => OrdersScreen(),
+            ProductImage.routeName: (ctx) => ProductImage(),
             EditProductScreen.routeName: (ctx) => EditProductScreen(),
             UserProductsScreen.routeName: (ctx) => UserProductsScreen(),
             ProductDetailsScreen.routeName: (ctx) => ProductDetailsScreen(),

@@ -35,7 +35,7 @@ class CartScreen extends StatelessWidget {
                     ),
                     Spacer(),
                     Chip(
-                      label: Text('\$${cart.total}'),
+                      label: Text('\$${cart.total.toStringAsFixed(2)}'),
                     ),
                     OrderFlatButton(cart),
                   ],
@@ -79,7 +79,7 @@ class _OrderFlatButtonState extends State<OrderFlatButton> {
         : FlatButton(
             child: Text(
               'ORDER',
-              // style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headline6,
             ),
             onPressed: (widget.cart.total == 0 || _isLoading)
                 ? null
