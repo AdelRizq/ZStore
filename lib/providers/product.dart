@@ -27,7 +27,7 @@ class Product with ChangeNotifier {
 
   Future<void> toggleFavorite(String authToken, String userId) async {
     var url =
-        'https://shopify-1b172-default-rtdb.firebaseio.com/userFavorites/$userId/$id.json?auth=$authToken';
+        'https://zstore-4a53e-default-rtdb.firebaseio.com/userFavorites/$userId/$id.json?auth=$authToken';
 
     isFavorite = !isFavorite;
     notifyListeners();

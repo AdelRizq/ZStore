@@ -29,28 +29,28 @@ class UserProductsItem extends StatelessWidget {
         child: Row(
           children: [
             IconButton(
-              icon: Icon(Icons.edit),
+              icon: const Icon(Icons.edit),
               onPressed: () {
                 Navigator.of(context)
                     .pushNamed(EditProductScreen.routeName, arguments: id);
               },
             ),
             IconButton(
-              icon: Icon(Icons.delete),
+              icon: const Icon(Icons.delete),
               onPressed: () async {
                 var confirmDeleting = showDialog(
                   context: context,
                   builder: (ctx) => AlertDialog(
-                    title: Text('Are You Sure?'),
-                    content: Text('Sure to remove thie product'),
+                    title: const Text('Are You Sure?'),
+                    content: const Text('Sure to remove thie product'),
                     actions: [
                       FlatButton(
                         onPressed: () => Navigator.of(ctx).pop(true),
-                        child: Text('Yes'),
+                        child: const Text('Yes'),
                       ),
                       FlatButton(
                         onPressed: () => Navigator.of(ctx).pop(false),
-                        child: Text('No'),
+                        child: const Text('No'),
                       ),
                     ],
                   ),
@@ -65,7 +65,7 @@ class UserProductsItem extends StatelessWidget {
                       } catch (_) {
                         scaffold.showSnackBar(
                           SnackBar(
-                            content: Text('Deleting failed!, please try again'),
+                            content: const Text('Deleting failed!, please try again'),
                           ),
                         );
                       }

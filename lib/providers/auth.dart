@@ -30,7 +30,7 @@ class Auth with ChangeNotifier {
   Future<void> _authenticate(
       String email, String password, String urlSegment) async {
     final url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=AIzaSyAa9cp5vZRGIXswxQt893ItAlzBNTbqTXw';
+        'https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=AIzaSyAJ8tkcZS3BtybzoL5_Eaqctn1hRgnmbJk';
 
     try {
       final response = await http.post(
@@ -69,7 +69,6 @@ class Auth with ChangeNotifier {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('userData', userData);
     } catch (error) {
-      print(error);
       throw HttpException(error);
     }
   }

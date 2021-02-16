@@ -19,10 +19,10 @@ class CartScreen extends StatelessWidget {
       body: Column(
         children: [
           Card(
-            margin: EdgeInsets.all(15),
+            margin: const EdgeInsets.all(15),
             child: Builder(builder: (context) {
               return Padding(
-                padding: EdgeInsets.all(12.0),
+                padding: const EdgeInsets.all(12.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -30,13 +30,13 @@ class CartScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         'Total',
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context).textTheme.headline5,
                       ),
                     ),
                     Chip(
                       label: Text('\$${cart.total.toStringAsFixed(2)}'),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     OrderFlatButton(cart),
                   ],
                 ),
@@ -79,7 +79,7 @@ class _OrderFlatButtonState extends State<OrderFlatButton> {
         : FlatButton(
             child: Text(
               'ORDER',
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.headline5,
             ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
@@ -101,8 +101,8 @@ class _OrderFlatButtonState extends State<OrderFlatButton> {
                       widget.cart.clear();
                     } catch (error) {
                       Scaffold.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Oops, please try again'),
+                        const SnackBar(
+                          content: const Text('Oops, please try again'),
                         ),
                       );
                     }

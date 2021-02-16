@@ -12,14 +12,14 @@ class OrdersScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Orders'),
+        title: const Text('Orders'),
       ),
       drawer: AppDrawer(),
       body: FutureBuilder(
         future: Provider.of<Orders>(context, listen: false).getAndSetOrders(),
         builder: (ctx, snapshotState) {
           if (snapshotState.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else {
             if (snapshotState.error == null) {
               return Consumer<Orders>(
@@ -29,7 +29,7 @@ class OrdersScreen extends StatelessWidget {
                 ),
               );
             } else {
-              return Center(child: Text('An error occured!'));
+              return const Center(child: Text('An error occured!'));
             }
           }
         },

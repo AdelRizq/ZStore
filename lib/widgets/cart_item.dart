@@ -20,16 +20,16 @@ class CartItem extends StatelessWidget {
 
   Widget _alertDialog(BuildContext ctx) {
     return AlertDialog(
-      title: Text('Are You Sure?'),
-      content: Text('Sure to remove this item ?'),
+      title: const Text('Are You Sure?'),
+      content: const Text('Sure to remove this item ?'),
       actions: [
         FlatButton(
           onPressed: () => Navigator.of(ctx).pop(true),
-          child: Text('Yes'),
+          child: const Text('Yes'),
         ),
         FlatButton(
           onPressed: () => Navigator.of(ctx).pop(false),
-          child: Text('No'),
+          child: const Text('No'),
         ),
       ],
     );
@@ -41,8 +41,8 @@ class CartItem extends StatelessWidget {
       key: ValueKey(id),
       direction: DismissDirection.endToStart,
       background: Container(
-        padding: EdgeInsets.all(20),
-        child: Icon(
+        padding: const EdgeInsets.all(20),
+        child: const Icon(
           Icons.delete,
           // color: Theme.of(context).errorColor,
           size: 40,
@@ -52,7 +52,7 @@ class CartItem extends StatelessWidget {
           color: Theme.of(context).errorColor,
           borderRadius: BorderRadius.circular(4),
         ),
-        margin: EdgeInsets.symmetric(
+        margin: const EdgeInsets.symmetric(
           horizontal: 12,
           vertical: 6,
         ),
@@ -67,7 +67,7 @@ class CartItem extends StatelessWidget {
         Provider.of<Cart>(context, listen: false).removeItem(productId);
       },
       child: Card(
-        margin: EdgeInsets.symmetric(
+        margin: const EdgeInsets.symmetric(
           horizontal: 12,
           vertical: 6,
         ),
@@ -76,7 +76,7 @@ class CartItem extends StatelessWidget {
             radius: 25,
             backgroundColor: Theme.of(context).accentColor,
             child: Padding(
-              padding: EdgeInsets.all(5),
+              padding: const EdgeInsets.all(5),
               child: FittedBox(
                 child: Text(
                   '\$${price.toStringAsFixed(2)}',
@@ -92,8 +92,9 @@ class CartItem extends StatelessWidget {
             children: [
               ButtonTheme(
                 minWidth: 20.0,
-                child: FlatButton(
-                  child: Icon(Icons.add),
+                child: IconButton(
+                  icon: const Icon(Icons.add),
+                  color: Theme.of(context).primaryColor,
                   onPressed: () {
                     Provider.of<Cart>(context, listen: false)
                         .addItem(productId, title, price);
@@ -102,8 +103,9 @@ class CartItem extends StatelessWidget {
               ),
               ButtonTheme(
                 minWidth: 20,
-                child: FlatButton(
-                  child: Icon(Icons.remove),
+                child: IconButton(
+                  icon: const Icon(Icons.remove),
+                  color: Theme.of(context).primaryColor,
                   onPressed: () {
                     Provider.of<Cart>(context, listen: false)
                         .removeSingleItem(productId);

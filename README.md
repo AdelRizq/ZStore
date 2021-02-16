@@ -1,4 +1,4 @@
-# shopify
+# ZStore
 
 A new Flutter project.
 

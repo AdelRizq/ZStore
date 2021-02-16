@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shopify/helpers/custom_route.dart';
-import 'package:shopify/screens/product_image_screen.dart';
 
 import './screens/auth_screen.dart';
 import './screens/cart_screen.dart';
 import './screens/splash_screen.dart';
 import './screens/orders_screen.dart';
 import './screens/edit_product_screen.dart';
+import './screens/product_image_screen.dart';
 import './screens/user_products_screen.dart';
 import './screens/product_details_screen.dart';
 import './screens/products_overview_screen.dart';
@@ -15,8 +14,9 @@ import './screens/products_overview_screen.dart';
 import './providers/auth.dart';
 import './providers/cart.dart';
 import './providers/orders.dart';
-import './providers/product.dart';
 import './providers/products.dart';
+
+import './helpers/custom_route.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,9 +28,43 @@ class MyApp extends StatelessWidget {
     'accent': Color(0xffec981a),
     'canvas': Color(0xFFdedee1),
     'bodyText1': Color(0xFF332E38),
-    'headline6': Color(0xFF332E38),
+    'headline6': Color(0xFFdedee1),
+    'headline3': Color(0xFF332E38),
     'headline4': Color(0xFF332E38),
   };
+
+  AppBarTheme _appBarTheme() {
+    return ThemeData.light().appBarTheme.copyWith(
+          textTheme: ThemeData.light().textTheme.copyWith(
+                headline6: TextStyle(
+                  color: currentTheme['headline6'],
+                  fontSize: 20,
+                  fontFamily: 'Lato',
+                ),
+              ),
+        );
+  }
+
+  TextTheme _textTheme() {
+    return ThemeData.light().textTheme.copyWith(
+          bodyText1: TextStyle(
+            color: currentTheme['bodyText1'],
+          ),
+          headline6: TextStyle(
+            color: currentTheme['headline6'],
+            fontSize: 20,
+          ),
+          headline5: TextStyle(
+            color: currentTheme['primary'],
+            fontSize: 20,
+          ),
+          headline2: TextStyle(
+            fontSize: 30,
+            color: currentTheme['primary'],
+            fontWeight: FontWeight.bold,
+          ),
+        );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,9 +83,6 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (ctx) => Cart(),
-        ),
-        ChangeNotifierProvider(
-          create: (ctx) => Product(),
         ),
         ChangeNotifierProxyProvider<Auth, Orders>(
           update: (ctx, auth, oldOrders) => Orders(
@@ -79,20 +110,8 @@ class MyApp extends StatelessWidget {
             accentColor: currentTheme['accent'],
             canvasColor: currentTheme['canvas'],
             visualDensity: VisualDensity.adaptivePlatformDensity,
-            textTheme: ThemeData.light().textTheme.copyWith(
-                  bodyText1: TextStyle(
-                    color: currentTheme['bodyText1'],
-                  ),
-                  headline6: TextStyle(
-                    color: currentTheme['headline6'],
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  headline4: TextStyle(
-                    color: currentTheme['headline4'],
-                    fontSize: 16,
-                  ),
-                ),
+            appBarTheme: _appBarTheme(),
+            textTheme: _textTheme(),
           ),
           home: auth.isAuth
               ? ProductsOverviewScreen()

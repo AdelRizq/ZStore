@@ -20,18 +20,18 @@ class _OrderItemState extends State<OrderItem> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       height: _isExpanded
-          ? min(widget.order.products.length * 20.0 + 150, 200)
+          ? min(widget.order.products.length * 20.0 + 150, 300)
           : 95,
       child: Card(
-        margin: EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
         child: Column(
           children: [
             ListTile(
-              title: Text('\$${widget.order.total}'),
+              title: Text('\$${widget.order.total.toStringAsFixed(2)}'),
               subtitle: Text(
-                  DateFormat('dd MM yyyy hh:mm').format(widget.order.date)),
+                  DateFormat('dd/MM/yyyy hh:mm').format(widget.order.date)),
               trailing: IconButton(
                 icon: Icon(_isExpanded ? Icons.expand_less : Icons.expand_more),
                 onPressed: () {
@@ -43,24 +43,26 @@ class _OrderItemState extends State<OrderItem> {
             ),
             SingleChildScrollView(
               child: AnimatedContainer(
-                duration: Duration(milliseconds: 450),
+                duration: const Duration(milliseconds: 300),
                 height: _isExpanded
-                    ? min(widget.order.products.length * 20.0 + 10, 200)
+                    ? min(widget.order.products.length * 20.0 + 28, 200)
                     : 0,
-                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
                 child: ListView.builder(
                   itemCount: widget.order.products.length,
-                  itemBuilder: (ctx, i) => Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  itemBuilder: (ctx, i) => Column(
                     children: [
-                      Text(
-                        widget.order.products[i].title,
-                        style: Theme.of(context).textTheme.headline6,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(widget.order.products[i].title),
+                          Text(
+                            '${widget.order.products[i].quantity} x \$${widget.order.products[i].price}',
+                            // style:
+                          ),
+                        ],
                       ),
-                      Text(
-                        '${widget.order.products[i].quantity} x \$${widget.order.products[i].price}',
-                        // style:
-                      ),
+                      const Divider(),
                     ],
                   ),
                 ),

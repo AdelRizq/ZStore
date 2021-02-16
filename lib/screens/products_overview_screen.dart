@@ -43,7 +43,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Shopify'),
+        title: const Text('ZStore'),
         actions: [
           PopupMenuButton(
             icon: const Icon(Icons.more_vert),
@@ -58,11 +58,11 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
             },
             itemBuilder: (_) => [
               const PopupMenuItem(
-                child: Text('Only Favorites'),
+                child: const Text('Only Favorites'),
                 value: FiltersOptions.Favorites,
               ),
               const PopupMenuItem(
-                child: Text('Show All'),
+                child: const Text('Show All'),
                 value: FiltersOptions.All,
               ),
             ],
@@ -73,7 +73,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
               value: cart.itemsCount.toString(),
             ),
             child: IconButton(
-              icon: Icon(Icons.shopping_cart),
+              icon: const Icon(Icons.shopping_cart),
               onPressed: () {
                 Navigator.of(context).pushNamed(CartScreen.routeName);
               },
@@ -83,7 +83,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
       ),
       drawer: AppDrawer(),
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : ProductsGrid(showFavorites),
     );
   }

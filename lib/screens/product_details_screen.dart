@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shopify/screens/product_image_screen.dart';
 
-import '../providers/products.dart';
-import '../providers/product.dart';
+import '../screens/product_image_screen.dart';
+
 import '../providers/cart.dart';
 import '../providers/auth.dart';
+import '../providers/product.dart';
+import '../providers/products.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   static String routeName = '/product-details';
@@ -17,25 +18,11 @@ class ProductDetailsScreen extends StatelessWidget {
       context,
       listen: false,
     ).getById(productId);
+    // Product pproduct = Provider.of<Product>(context, listen: false);
     final auth = Provider.of<Auth>(context, listen: false);
 
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          Consumer<Product>(
-            builder: (ctx, product, _) => FlatButton(
-              height: 60,
-              child: Icon(
-                product.isFavorite ? Icons.favorite : Icons.favorite_border,
-                color: Theme.of(context).accentColor,
-              ),
-              onPressed: () {
-                product.toggleFavorite(auth.token, auth.userId);
-              },
-            ),
-          ),
-        ],
-      ),
+      appBar: _AppBar(product: product, auth: auth),
       body: Builder(
         builder: (context) => CustomScrollView(
           slivers: [
@@ -45,7 +32,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   Container(
                     height: MediaQuery.of(context).size.height * .5,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).canvasColor,
                     ),
                     child: GestureDetector(
                       onTap: () => Navigator.of(context).pushNamed(
@@ -56,26 +43,22 @@ class ProductDetailsScreen extends StatelessWidget {
                         tag: product.id,
                         child: Image.network(
                           product.imageUrl,
-                          fit: BoxFit.fill,
+                          fit: BoxFit.contain,
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Padding(
                     padding: EdgeInsets.only(
                       left: MediaQuery.of(context).size.width * .1,
                     ),
                     child: Text(
                       product.title,
-                      style: TextStyle(
-                        fontSize: 30,
-                        color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Theme.of(context).textTheme.headline2,
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Flex(
                     direction: Axis.horizontal,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -116,7 +99,10 @@ class ProductDetailsScreen extends StatelessWidget {
                                 '\$${product.price.toStringAsFixed(2)}',
                                 style: TextStyle(
                                   color: Theme.of(context).primaryColor,
-                                  fontSize: 30,
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .headline2
+                                      .fontSize,
                                 ),
                               ),
                             ),
@@ -135,11 +121,9 @@ class ProductDetailsScreen extends StatelessWidget {
                                 ),
                                 child: Row(
                                   children: [
-                                    Text('CART'),
-                                    SizedBox(
-                                      width: 15,
-                                    ),
-                                    Icon(Icons.shopping_cart_outlined),
+                                    const Text('CART'),
+                                    const SizedBox(width: 15),
+                                    const Icon(Icons.shopping_cart_outlined),
                                   ],
                                 ),
                                 onPressed: () {
@@ -148,8 +132,8 @@ class ProductDetailsScreen extends StatelessWidget {
                                   Scaffold.of(context).hideCurrentSnackBar();
                                   Scaffold.of(context).showSnackBar(
                                     SnackBar(
-                                      content: Text('Added item to the cart'),
-                                      duration: Duration(seconds: 2),
+                                      content: const Text('Added item to the cart'),
+                                      duration: const Duration(seconds: 2),
                                       action: SnackBarAction(
                                         label: "Undo",
                                         onPressed: () {
@@ -173,6 +157,45 @@ class ProductDetailsScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _AppBar extends StatefulWidget implements PreferredSizeWidget {
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  const _AppBar({
+    Key key,
+    @required this.product,
+    @required this.auth,
+  }) : super(key: key);
+
+  final Product product;
+  final Auth auth;
+
+  @override
+  __AppBarState createState() => __AppBarState();
+}
+
+class __AppBarState extends State<_AppBar> {
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      actions: [
+        FlatButton(
+          height: 60,
+          child: Icon(
+            widget.product.isFavorite ? Icons.favorite : Icons.favorite_border,
+            color: Theme.of(context).accentColor,
+          ),
+          onPressed: () {
+            widget.product
+                .toggleFavorite(widget.auth.token, widget.auth.userId);
+            setState(() {});
+          },
+        ),
+      ],
     );
   }
 }

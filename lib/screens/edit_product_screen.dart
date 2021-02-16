@@ -50,7 +50,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
       String productId = ModalRoute.of(context).settings.arguments as String;
       if (productId != null) {
         Product oldProduct = Provider.of<Products>(context).getById(productId);
-        print(oldProduct.id);
+
         _initValues['id'] = oldProduct.id;
         _initValues['title'] = oldProduct.title;
         _initValues['price'] = oldProduct.price.toString();
@@ -111,7 +111,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
               content: Text('Something went wrong :('),
               actions: [
                 FlatButton(
-                  child: Text('Okey'),
+                  child: const Text('Okey'),
                   onPressed: () => Navigator.of(ctx).pop(),
                 )
               ],
@@ -130,16 +130,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit product'),
+        title: const Text('Edit product'),
         actions: [
           IconButton(
-            icon: Icon(Icons.save),
+            icon: const Icon(Icons.save),
             onPressed: _saveForm,
           ),
         ],
       ),
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Padding(
               padding: const EdgeInsets.all(12.0),
               child: Form(
@@ -148,7 +148,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   children: [
                     TextFormField(
                       initialValue: _initValues['title'],
-                      decoration: InputDecoration(labelText: 'Title'),
+                      decoration: const InputDecoration(labelText: 'Title'),
                       textInputAction: TextInputAction.next,
                       onFieldSubmitted: (_) =>
                           FocusScope.of(context).requestFocus(_priceFocusNode),
@@ -172,7 +172,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     ),
                     TextFormField(
                       initialValue: _initValues['price'],
-                      decoration: InputDecoration(labelText: 'Price'),
+                      decoration: const InputDecoration(labelText: 'Price'),
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.number,
                       focusNode: _priceFocusNode,
@@ -202,7 +202,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     ),
                     TextFormField(
                       initialValue: _initValues['description'],
-                      decoration: InputDecoration(labelText: 'Description'),
+                      decoration: const InputDecoration(labelText: 'Description'),
                       maxLines: 3,
                       keyboardType: TextInputType.multiline,
                       focusNode: _descriptionFocusNode,
@@ -238,12 +238,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
                               color: Colors.grey,
                             ),
                           ),
-                          margin: EdgeInsets.only(
+                          margin: const EdgeInsets.only(
                             top: 10,
                             right: 10,
                           ),
                           child: _imageUrlController.text.isEmpty
-                              ? Text("Enter an image url")
+                              ? const Text("Enter an image url")
                               : FittedBox(
                                   child: Image.network(
                                     _imageUrlController.text,
@@ -253,7 +253,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         ),
                         Expanded(
                           child: TextFormField(
-                            decoration: InputDecoration(labelText: 'Image URL'),
+                            decoration: const InputDecoration(labelText: 'Image URL'),
                             keyboardType: TextInputType.url,
                             textInputAction: TextInputAction.done,
                             focusNode: _imageUrlFocusNode,
