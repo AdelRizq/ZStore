@@ -1,4 +1,6 @@
-![ZStore2](https://user-images.githubusercontent.com/40351413/108101701-4333c580-7090-11eb-8522-c751d53f1f9f.png)
+<div align='center'>
+<img height="600px" src="https://user-images.githubusercontent.com/40351413/108101701-4333c580-7090-11eb-8522-c751d53f1f9f.png">
+</div>
 
 [![GitHub contributors](https://img.shields.io/github/contributors/AdelRizq/ZStore)](https://github.com/AdelRizq/ZStore/contributors)
 [![GitHub issues](https://img.shields.io/github/issues/AdelRizq/ZStore)](https://github.com/AdelRizq/ZStore/issues)
