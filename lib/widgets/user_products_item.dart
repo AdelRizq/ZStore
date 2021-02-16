@@ -41,16 +41,30 @@ class UserProductsItem extends StatelessWidget {
                 var confirmDeleting = showDialog(
                   context: context,
                   builder: (ctx) => AlertDialog(
-                    title: const Text('Are You Sure?'),
-                    content: const Text('Sure to remove thie product'),
+                    title: Text(
+                      'Are You Sure?',
+                      style: TextStyle(color: Theme.of(context).primaryColor),
+                    ),
+                    content: Text(
+                      'Sure to remove thie product',
+                      style: TextStyle(color: Theme.of(context).primaryColor),
+                    ),
                     actions: [
                       FlatButton(
                         onPressed: () => Navigator.of(ctx).pop(true),
-                        child: const Text('Yes'),
+                        child: Text(
+                          'Yes',
+                          style:
+                              TextStyle(color: Theme.of(context).primaryColor),
+                        ),
                       ),
                       FlatButton(
                         onPressed: () => Navigator.of(ctx).pop(false),
-                        child: const Text('No'),
+                        child: Text(
+                          'No',
+                          style:
+                              TextStyle(color: Theme.of(context).primaryColor),
+                        ),
                       ),
                     ],
                   ),
@@ -65,7 +79,8 @@ class UserProductsItem extends StatelessWidget {
                       } catch (_) {
                         scaffold.showSnackBar(
                           SnackBar(
-                            content: const Text('Deleting failed!, please try again'),
+                            content: const Text(
+                                'Deleting failed!, please try again'),
                           ),
                         );
                       }

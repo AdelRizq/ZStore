@@ -20,16 +20,28 @@ class CartItem extends StatelessWidget {
 
   Widget _alertDialog(BuildContext ctx) {
     return AlertDialog(
-      title: const Text('Are You Sure?'),
-      content: const Text('Sure to remove this item ?'),
+      title: Text(
+        'Are You Sure?',
+        style: TextStyle(color: Theme.of(ctx).primaryColor),
+      ),
+      content: Text(
+        'Sure to remove this item ?',
+        style: TextStyle(color: Theme.of(ctx).primaryColor),
+      ),
       actions: [
         FlatButton(
           onPressed: () => Navigator.of(ctx).pop(true),
-          child: const Text('Yes'),
+          child: Text(
+            'Yes',
+            style: TextStyle(color: Theme.of(ctx).accentColor),
+          ),
         ),
         FlatButton(
           onPressed: () => Navigator.of(ctx).pop(false),
-          child: const Text('No'),
+          child: Text(
+            'No',
+            style: TextStyle(color: Theme.of(ctx).accentColor),
+          ),
         ),
       ],
     );

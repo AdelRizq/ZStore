@@ -40,30 +40,19 @@ class AuthScreen extends StatelessWidget {
                 children: <Widget>[
                   Flexible(
                     child: Container(
+                      width: 220,
+                      height: 235,
+                      padding: EdgeInsets.all(20),
                       margin: EdgeInsets.only(bottom: 20.0),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 94.0),
-                      transform: Matrix4.rotationZ(0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Theme.of(context).primaryColor,
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 8,
-                            color: Colors.black26,
-                            offset: Offset(0, 2),
-                          )
-                        ],
-                      ),
-                      child: Text(
-                        'ZStore',
-                        style: TextStyle(
-                          color: Theme.of(context).canvasColor,
-                          fontSize: 50,
-                          fontFamily: 'Anton',
-                          fontWeight: FontWeight.normal,
+
+                      child: ClipRect(
+                        child: Image.asset(
+                          'assets/images/logo.png',
+                          fit: BoxFit.fill,
+                          
                         ),
                       ),
+                   
                     ),
                   ),
                   Flexible(
@@ -139,11 +128,22 @@ class _AuthCardState extends State<AuthCard>
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('An error Occured!'),
-        content: Text(message),
+        title: Text(
+          'An error Occured!',
+          style: TextStyle(color: Theme.of(context).primaryColor),
+        ),
+        content: Text(
+          message,
+          style: TextStyle(color: Theme.of(context).primaryColor),
+        ),
         actions: [
           FlatButton(
-            child: const Text('Okey'),
+            child: Text(
+              'Okey',
+              style: TextStyle(
+                color: Theme.of(context).accentColor,
+              ),
+            ),
             onPressed: () => Navigator.of(ctx).pop(),
           )
         ],
